@@ -1,0 +1,54 @@
+{
+    attributes = (
+        {
+            columnName = "AUTHEUR_ID"; 
+            externalType = NUMBER; 
+            name = autheurId; 
+            valueClassName = NSNumber; 
+            valueType = i; 
+        }, 
+        {
+            allowsNull = Y; 
+            columnName = EMAIL; 
+            externalType = VARCHAR2; 
+            name = email; 
+            valueClassName = NSString; 
+            valueType = S; 
+            width = 100; 
+        }, 
+        {
+            allowsNull = Y; 
+            columnName = NOM; 
+            externalType = VARCHAR2; 
+            name = nom; 
+            valueClassName = NSString; 
+            valueType = S; 
+            width = 50; 
+        }, 
+        {
+            allowsNull = Y; 
+            columnName = PRENOMS; 
+            externalType = VARCHAR2; 
+            name = prenoms; 
+            valueClassName = NSString; 
+            valueType = S; 
+            width = 50; 
+        }
+    ); 
+    attributesUsedForLocking = (autheurId, email, nom, prenoms); 
+    className = "fr.blog.metier.Autheur"; 
+    classProperties = (autheurId, blogs, email, nom, prenoms); 
+    externalName = "TESTREST.AUTHEUR"; 
+    fetchSpecificationDictionary = {}; 
+    name = Autheur; 
+    primaryKeyAttributes = (autheurId); 
+    relationships = (
+        {
+            destination = Blog; 
+            isToMany = Y; 
+            joinSemantic = EOInnerJoin; 
+            joins = ({destinationAttribute = autheurId; sourceAttribute = autheurId; }); 
+            name = blogs; 
+        }
+    ); 
+}

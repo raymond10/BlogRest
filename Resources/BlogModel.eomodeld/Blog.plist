@@ -1,0 +1,69 @@
+{
+    attributes = (
+        {
+            columnName = "AUTHEUR_ID"; 
+            externalType = NUMBER; 
+            name = autheurId; 
+            valueClassName = NSNumber; 
+            valueType = i; 
+        }, 
+        {
+            columnName = "BLOG_ID"; 
+            externalType = NUMBER; 
+            name = blogId; 
+            valueClassName = NSNumber; 
+            valueType = i; 
+        }, 
+        {
+            allowsNull = Y; 
+            columnName = CONTENU; 
+            externalType = VARCHAR2; 
+            name = contenu; 
+            valueClassName = NSString; 
+            valueType = S; 
+            width = 4000; 
+        }, 
+        {
+            allowsNull = Y; 
+            columnName = "DATE_CREATION"; 
+            externalType = DATE; 
+            name = dateCreation; 
+            valueClassName = NSCalendarDate; 
+            valueType = T; 
+        }, 
+        {
+            allowsNull = Y; 
+            columnName = "DERNIERE_MODIF"; 
+            externalType = DATE; 
+            name = derniereModif; 
+            valueClassName = NSCalendarDate; 
+            valueType = T; 
+        }, 
+        {
+            allowsNull = Y; 
+            columnName = TITRE; 
+            externalType = VARCHAR2; 
+            name = titre; 
+            valueClassName = NSString; 
+            valueType = S; 
+            width = 255; 
+        }
+    ); 
+    attributesUsedForLocking = (autheurId, blogId, contenu, dateCreation, derniereModif, titre); 
+    className = "fr.blog.metier.Blog"; 
+    classProperties = (autheur, autheurId, blogId, contenu, dateCreation, derniereModif, titre); 
+    externalName = "TESTREST.BLOG"; 
+    fetchSpecificationDictionary = {}; 
+    name = Blog; 
+    primaryKeyAttributes = (blogId); 
+    relationships = (
+        {
+            destination = Autheur; 
+            isMandatory = Y; 
+            isToMany = N; 
+            joinSemantic = EOInnerJoin; 
+            joins = ({destinationAttribute = autheurId; sourceAttribute = autheurId; }); 
+            name = autheur; 
+        }
+    ); 
+}

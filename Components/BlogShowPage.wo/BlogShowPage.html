@@ -1,0 +1,7 @@
+<wo:RestHeaderFooter>
+    <h1><wo:str value = "$blog.titre" escapeHTML = "false"/></h1>
+    <p><wo:str value = "$blog.contenu" escapeHTML = "false" /></p>
+    <p>Cr&eacute;er le: <wo:str value = "$blog.dateCreation" dateformat = "%d/%m/%Y" /></p>
+    <p>Ajouter par: <wo:str value = "$blog.autheur.fullName" escapeHTML = "false" /></p>
+    <p><wo:ERXRouteLink entityName = "Blog" action = "index" absolute = "$true">retour au bloggeurs</wo:ERXRouteLink></p>
+</wo:RestHeaderFooter>

@@ -1,0 +1,11 @@
+<wo:RestHeaderFooter>
+    <h3>Lite des bloggeurs</h3>
+    <wo:loop list = "$blogs" item = "$blogItem">
+      <p>
+        <li>
+          <wo:ERXRouteLink entityName = "Blog" record = "$blogItem" action = "show" ><wo:str value = "$blogItem.titre" escapeHTML = "false" /></wo:ERXRouteLink>
+        </li>
+        <wo:str value = "$blogItem.autheur.fullName" escapeHTML = "false" />
+      </p>
+    </wo:loop>
+</wo:RestHeaderFooter>

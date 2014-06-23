@@ -1,0 +1,9 @@
+{
+    EOModelVersion = "2.1"; 
+    adaptorName = JDBC; 
+    connectionDictionary = {URL = ""; driver = ""; password = ""; username = ""; }; 
+    entities = (
+        {className = "fr.blog.metier.Autheur"; name = Autheur; }, 
+        {className = "fr.blog.metier.Blog"; name = Blog; }
+    ); 
+}
