@@ -72,3 +72,6 @@ log4j.logger.er.extensions.ERXConfigurationManager=INFO
 er.extensions.ERXLocalizer.availableLanguages=(French,English,German,Japanese)
 er.extensions.ERXLocalizer.defaultLanguage=French
 er.extensions.ERXLocalizer.fileNamesToWatch=("Localizable.strings","Messages.strings", "ValidationTemplate.strings")
+
+#ERXThreadStorage memory leak Bug
+er.extensions.ERXThreadStorage.useInheritableThreadLocal=false
