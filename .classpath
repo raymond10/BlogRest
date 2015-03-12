@@ -41,5 +41,6 @@
 	<classpathentry kind="lib" path="Libraries/wounit-1.2.jar"/>
 	<classpathentry kind="con" path="WOFramework/EROraclePlugIn"/>
 	<classpathentry kind="lib" path="Libraries/ojdbc6.jar"/>
+	<classpathentry kind="lib" path="Libraries/lombok.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

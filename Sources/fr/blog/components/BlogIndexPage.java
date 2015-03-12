@@ -1,5 +1,8 @@
 package fr.blog.components;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import com.webobjects.appserver.WOContext;
 import com.webobjects.eocontrol.EOEditingContext;
 import com.webobjects.foundation.NSArray;
@@ -9,6 +12,8 @@ import er.extensions.eof.ERXEC;
 import er.rest.routes.IERXRouteComponent;
 import fr.blog.metier.Blog;
 
+@Getter
+@Setter
 public class BlogIndexPage extends ERXComponent implements IERXRouteComponent {
 	/**
 	 * 
@@ -24,13 +29,5 @@ public class BlogIndexPage extends ERXComponent implements IERXRouteComponent {
 	public NSArray<Blog> blogs() {
 		EOEditingContext ec = ERXEC.newEditingContext();
 		return Blog.fetchAllBlogs(ec, Blog.DATE_CREATION.descs());
-	}
-
-	public Blog blogItem() {
-		return blogItem;
-	}
-
-	public void setBlogItem(Blog blogItem) {
-		this.blogItem = blogItem;
 	}
 }

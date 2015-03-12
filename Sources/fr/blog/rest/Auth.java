@@ -7,15 +7,22 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import net.sf.json.JSONObject;
 import er.extensions.foundation.ERXStringUtilities;
 import fr.blog.exceptions.RestAuthenticationFailureException;
+import fr.blog.metier.Blog;
 import fr.blog.service.IRestObject;
 
 /**
- * @author Raymond NANEON <raymond.naneon at utt.fr> 26 fŽvr. 2014
+ * @author Raymond NANEON <raymond.naneon at utt.fr> 26 fï¿½vr. 2014
  *
  */
+@AllArgsConstructor
+@Getter
+@Setter
 public class Auth implements IRestObject {
 	public static final String UTILISATEUR_PERSID_PARAMKEY = "utilisateur.persid";
 
@@ -41,30 +48,6 @@ public class Auth implements IRestObject {
 		this.creationDate = new Date();
 	}
 
-	public String getUser() {
-		return user;
-	}
-
-	public void setUser(String user) {
-		this.user = user;
-	}
-
-	public Date getCreationDate() {
-		return creationDate;
-	}
-
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
-	}
-
-	public Integer getPersId() {
-		return persId;
-	}
-
-	public void setPersId(Integer persId) {
-		this.persId = persId;
-	}
-
 	public Map<String, Object> toMap() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put(USER_KEY, getUser());
@@ -82,7 +65,7 @@ public class Auth implements IRestObject {
 		JSONObject jsonObject = JSONObject.fromObject(src);
 		Auth auth = (Auth) JSONObject.toBean(jsonObject, Auth.class);
 		if (auth == null) {
-			throw new RestAuthenticationFailureException("Token mal formŽ.");
+			throw new RestAuthenticationFailureException("Token mal formï¿½.");
 		}
 		checkCondition(CREATIONDATE_KEY, auth.getCreationDate() != null);
 		checkCondition(USER_KEY, !ERXStringUtilities.stringIsNullOrEmpty(auth.getUser()));
@@ -92,7 +75,7 @@ public class Auth implements IRestObject {
 
 	public static void checkCondition(String attributeName, boolean condition) {
 		if (!condition) {
-			throw new RestAuthenticationFailureException("Token mal formŽ : " + attributeName + " est vide");
+			throw new RestAuthenticationFailureException("Token mal formï¿½ : " + attributeName + " est vide");
 		}
 	}
 

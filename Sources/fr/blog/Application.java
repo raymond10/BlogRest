@@ -14,13 +14,9 @@ import com.woinject.WOInject;
 import er.extensions.appserver.ERXApplication;
 import er.extensions.appserver.ERXMessageEncoding;
 import er.extensions.foundation.ERXProperties;
-import er.rest.routes.ERXRoute;
 import er.rest.routes.ERXRouteRequestHandler;
 import fr.blog.metier.Blog;
-import fr.blog.rest.controllers.BlogController;
-import fr.blog.rest.controllers.BlogRestController;
-import fr.blog.rest.controllers.ServicesListController;
-import fr.blog.service.Services;
+import fr.blog.rest.controllers.BlogRestController;;
 
 public class Application extends InjectableApplication {
 	
@@ -30,7 +26,6 @@ public class Application extends InjectableApplication {
 	private static String defaultAppURL;
 	
 	public static void main(String[] argv) {
-		//ERXApplication.main(argv, Application.class);
 		WOInject.init("fr.blog.Application", argv);
 	}
 
@@ -38,7 +33,7 @@ public class Application extends InjectableApplication {
 		ERXApplication.log.info("Lancement de l'application serveur " + name() + " !");
 		/* ** put your initialization code in here ** */
 		setAllowsConcurrentRequestHandling(true);
-		// Formatage des dates dans les rŽponses REST
+		// Formatage des dates dans les rï¿½ponses REST
 		String dateFormat = ERXProperties.stringForKeyWithDefault(ER_REST_TIMESTAMP_FORMAT, ER_REST_TIMESTAMP_DEFAULT_FORMAT);
 		ERXProperties.setStringForKey(dateFormat, ER_REST_TIMESTAMP_FORMAT);
 
@@ -60,11 +55,10 @@ public class Application extends InjectableApplication {
 		routeRequestHandler.addDefaultRoutes(Blog.ENTITY_NAME);
 		routeRequestHandler.addRoutes(BlogRestController.class);
 		ERXRouteRequestHandler.register(routeRequestHandler);
-		//System.out.println(routeRequestHandler.routes());
 	}
 	
 	/**
-	 *  Injection du module contenant les Binding interface et implŽmentation mŽthodes
+	 *  Injection du module contenant les Binding interface et implï¿½mentation mï¿½thodes
 	 */
 	protected Module[] modules() {
 		return ArrayUtils.add(super.modules(), new RestMoldule());
@@ -92,10 +86,6 @@ public class Application extends InjectableApplication {
 		int i = applicationURL.indexOf(".woa");
 		if (i >= 0)
 			applicationURL = applicationURL.substring(0, i) + ".woa";
-		//    // Sinon, on cherche le URL dans la config de l'application
-		//    if ((applicationURL == null) ||
-		//        (!applicationURL.startsWith("http")))
-		//      applicationURL = config().stringForKey("APP_URL");
 		return applicationURL;
 	}
 
