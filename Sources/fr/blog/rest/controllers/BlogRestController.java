@@ -50,6 +50,12 @@ public class BlogRestController extends RestController {
 	}
 	
 	//Blog
+	
+	/**
+	 * Cherche les blogs à partir du token passé en paramètres
+	 * @param token la chaine de recherche
+	 * @return les résultats
+	 */
 
 	/**
 	 * 
@@ -63,24 +69,35 @@ public class BlogRestController extends RestController {
 		return jsonResponseWithObject(blogService.search(token));
 	}
 
+	/**
+	 * Cherche un blog en particulier à partir de l'id du blog passé en paramètres
+	 * @param blogId
+	 * @return un resultat
+	 */
 	@GET
-	@Path("/blog/{blogId:Integer}")
+	@Path("/blog/numero/{blogId:Integer}")
 	public WOActionResults blogParIdAction(
 			@PathParam("blogId") Integer blogId) throws RestNoDataException {
 		return jsonResponseWithObject(blogService.blogById(blogId));
 	}
 	
+	/** 
+	 * Create new blog
+	 * **/
 	@POST
-	@Path("/blog/newBlog")
+	@Path("/blog/create/newBlog")
 	public WOActionResults newBlogAction(BlogBean blogbean) {
 		return jsonResponseWithObject(blogService.createNewBlog(blogbean));
 	}
+	
+	/**Update blog **/
 	@PUT
 	@Path("/blog/update/{blogId:Integer}")
 	public WOActionResults updateBlogAction(BlogBean blogbean) {
 		return jsonResponseWithObject(blogService.updateBlog(blogbean));
 	}
 	
+	/**Remove blog **/
 	@DELETE
     @Path("/blog/delete/{blogId:Integer}")
 	public void removeBlogAction(BlogBean blogbean) {
@@ -88,6 +105,12 @@ public class BlogRestController extends RestController {
 	}
 	
 	//Autheur
+	
+	/**
+	 * Cherche les blogs à partir du token passé en paramètres
+	 * @param token la chaine de recherche
+	 * @return les résultats
+	 */
 	@GET
 	@Path("/autheur/recherche/{token:String}")
 	public WOActionResults rechercheAutheurAction(@PathParam("token") String token)
@@ -95,15 +118,21 @@ public class BlogRestController extends RestController {
 		return jsonResponseWithObject(autheurService.search(token));
 	}
 
+	/**
+	 * Revoie les détail d'un autheur de blog
+	 * @param autheurId identifiant de l'autheur
+	 * @return les details 
+	 * @throws RestNoDataException 
+	 */
 	@GET
-	@Path("/autheur/{autheurId:Integer}")
+	@Path("/autheur/numero/{autheurId:Integer}")
 	public WOActionResults autheurByIdAction(@PathParam("autheurId") Integer autheurId)
 			throws RestNoDataException {
 		return jsonResponseWithObject(autheurService.autheurById(autheurId));
 	}
 	
 	@POST
-	@Path("/autheur/newAutheur")
+	@Path("/autheur/create/newAutheur")
 	public WOActionResults newAutheurAction(AutheurBean autheurbean) {
 		return jsonResponseWithObject(autheurService.createNewAutheur(autheurbean));
 	}
@@ -122,7 +151,10 @@ public class BlogRestController extends RestController {
 	protected WOResponse jsonResponseWithObject(Object object) {
 		WOResponse response = new WOResponse();
 		response.setStatus(WOResponse.HTTP_STATUS_OK);
-		response.setHeader("application/json", "Content-Type");
+		response.setContentEncoding("UTF8");
+		response.setHeader("BlogRest", "title");
+		response.setHeader("*", "Access-Control-Allow-Origin");
+		response.setHeader("application/json; charset=utf-8", "Content-Type");
 
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(Feature.INDENT_OUTPUT, true);

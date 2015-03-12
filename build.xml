@@ -1,11 +1,19 @@
 <project name="BlogRest" default="build" basedir=".">
-	<target name="build" depends="init.build,build.woapp,javaclient,ssdd,war,split,package" />
+	<target name="build" depends="init.build,build.woapp,javaclient,ssdd,war,split,package-cedre" />
 
-	<target name="install" depends="init.install,build.woapp,javaclient,ssdd,war,split,package" />
+	<target name="install" depends="init.install,cleanbuild,build.woapp,javaclient,ssdd,war,split,package-cedre" />
 
 	<target name="clean" depends="init.properties">
 		<delete dir="bin" />
 		<delete dir="dist" />
+	</target>
+
+	<target name="cleanbuild" depends="init.properties">
+		<delete dir="${dest.dir}/${build.app.name}.woa" />
+		<delete file="${dest.dir}/${build.app.name}-Application.${build.app.version}.tar.gz" />
+		<delete file="${dest.dir}/${build.app.name}-WebServerResources.${build.app.version}.tar.gz" />
+		<delete file="${dest.dir}/woa-${org.cedre.sphere}-${TODAY_CEDRE}-${project.name.alias}_v${version}.tar.gz" />
+		<delete file="${dest.dir}/web-${org.cedre.sphere}-${TODAY_CEDRE}-${project.name.alias}_v${version}.tar.gz" />
 	</target>
 
 	<!-- basic initializations  -->
@@ -18,11 +26,10 @@
 		<tstamp />
 		<property name="dest.dir" value="dist" />
 	</target>
-	
+
 	<!-- property determination  -->
 	<target name="init.properties">
 		<property file="build.properties" />
-
 		<property name="wolips.properties" value="${user.home}${file.separator}Library${file.separator}Application Support${file.separator}WOLips${file.separator}wolips.properties" />
 		<property file="${wolips.properties}" />
 		<condition property="wo.properties.check.failed">
@@ -53,35 +60,42 @@
 		</copy>
 	</target>
 
-  <target name="package" unless="servletDeployment">
-    <tar destfile="${dest.dir}/${build.app.name}-Application.tar.gz"
+	<target name="package" unless="servletDeployment">
+		<tar destfile="${dest.dir}/${build.app.name}-Application.tar.gz"
         compression="gzip"
         longfile="gnu">
-      <tarfileset dir="${dest.dir}" mode="750">
-        <include name="${build.app.name}.woa/${build.app.name}"/>
-      </tarfileset>
-      <tarfileset dir="${dest.dir}">
-        <exclude name="${build.app.name}.woa/${build.app.name}"/>
-        <include name="${build.app.name}.woa/**"/>
-      </tarfileset>
-    </tar>
-    <tar destfile="${dest.dir}/${build.app.name}-WebServerResources.tar.gz"
+			<tarfileset dir="${dest.dir}" mode="750">
+				<include name="${build.app.name}.woa/${build.app.name}"/>
+			</tarfileset>
+			<tarfileset dir="${dest.dir}">
+				<exclude name="${build.app.name}.woa/${build.app.name}"/>
+				<include name="${build.app.name}.woa/**"/>
+			</tarfileset>
+		</tar>
+		<tar destfile="${dest.dir}/${build.app.name}-WebServerResources.tar.gz"
         compression="gzip"
         basedir="${wsdest.dir}/WebObjects"
         longfile="gnu"
         includes="${build.app.name}.woa/**">
-    </tar>
+		</tar>
 	</target>
+
+
+
 
 	<!-- woproject tasks -->
 	<target name="build.woapp" depends="compile">
+		<echo>Suppression de ${dest.dir}/${build.app.name}.woa</echo>
+		<delete dir="${dest.dir}/${build.app.name}.woa"/>
+
+
 		<taskdef name="woapplication" classname="org.objectstyle.woproject.ant.WOApplication"/>
 
 		<woapplication name="${build.app.name}" frameworksBaseURL="/WebObjects/${build.app.name}.woa/Frameworks" destDir="${dest.dir}" customInfoPListContent="${customInfoPListContent}" principalClass="${principalClass}" webXML="${webXML}" webXML_CustomContent="${webXML_CustomContent}" servletAdaptor="er.extensions.jspservlet.ERXServletAdaptor">
 			<classes dir="${classes.dir}">
 				<includesfile name="woproject/classes.include.patternset" />
 				<excludesfile name="woproject/classes.exclude.patternset" />
-        <exclude if="javaClient" name="**/client/**/*.*"/>
+				<exclude if="javaClient" name="**/client/**/*.*"/>
 			</classes>
 
 			<wsresources dir=".">
@@ -92,7 +106,7 @@
 			<resources dir=".">
 				<includesfile name="woproject/resources.include.patternset" />
 				<excludesfile name="woproject/resources.exclude.patternset" />
-        <exclude if="javaClient" name="**/client/**/*.*"/>
+				<exclude if="javaClient" name="**/client/**/*.*"/>
 			</resources>
 
 			<frameworks root="ProjectLocal" embed="${embed.ProjectLocal}" eclipse="true" />
@@ -107,7 +121,7 @@
 			</lib>
 		</woapplication>
 	</target>
-	
+
 	<target name="javaclient" if="javaClient" depends="build.woapp">
 		<mkdir dir="${dest.dir}/${build.app.name}.woa/Contents/WebServerResources/Java" />
 		<jar basedir="${classes.dir}" excludes="**/server/**/*.*, **/server/**/" jarfile="${dest.dir}/${build.app.name}.woa/Contents/WebServerResources/Java/${build.app.name}.jar"/>
@@ -179,15 +193,15 @@
 			</fileset>
 			<mapper type="flatten" />
 		</copy>
-		
+
 		<!-- the Java Client Client-Side Classes 	  -->
 		<copy todir="${dest.dir}/${build.app.name}/WEB-INF/${build.app.name}.woa/Contents/WebServerResources/Java">
-			<fileset dir="${wo.local.frameworks}"> 
-				<include name="**/WebServerResources/Java/*.jar"/> 
-			</fileset> 
+			<fileset dir="${wo.local.frameworks}">
+				<include name="**/WebServerResources/Java/*.jar"/>
+			</fileset>
 			<mapper type="flatten"/>
 		</copy>
-		
+
 		<!-- fix the Macos*ClassPath.txt files  -->
 		<replaceregexp file="${dest.dir}/${build.app.name}/WEB-INF/${build.app.name}.woa/Contents/MacOS/MacOSClassPath.txt" match="APPROOT/Resources/Java/${build.app.name.lowercase}.jar" replace="APPROOT/${build.app.name}.woa/Contents/Resources/Java/${build.app.name.lowercase}.jar" byline="true" />
 		<replaceregexp file="${dest.dir}/${build.app.name}/WEB-INF/${build.app.name}.woa/Contents/MacOS/MacOSXServerClassPath.txt" match="APPROOT/Resources/Java/${build.app.name.lowercase}.jar" replace="APPROOT/${build.app.name}.woa/Contents/Resources/Java/${build.app.name.lowercase}.jar" byline="true" />
@@ -203,7 +217,7 @@
 		<taskdef name="wocompile" classname="org.objectstyle.woproject.ant.WOCompile" />
 
 		<mkdir dir="bin" />
-		<wocompile srcdir="Sources" destdir="bin">
+		<wocompile srcdir="Sources" destdir="bin" includeantruntime="false">
 			<frameworks root="ProjectLocal" embed="false" eclipse="true" />
 			<frameworks root="External" embed="false" eclipse="true" />
 			<frameworks root="Local" embed="false" eclipse="true" />
@@ -220,4 +234,63 @@
 			</classpath>
 		</wocompile>
 	</target>
+
+	<target name="package-cedre" depends="init.install">
+		<property name="wsdest.dir" value="${dest.dir}/Split" />
+		<condition property="version.file.check.failed">
+			<not>
+				<isset property="version.file" />
+			</not>
+		</condition>
+		<fail message="La propriété version.file n'est pas définie. Vérifiez le fichier build.properties." if="version.file.check.failed" />
+		<condition property="org.cedre.sphere.check.failed">
+			<not>
+				<isset property="org.cedre.sphere" />
+			</not>
+		</condition>
+		<fail message="La propriété org.cedre.sphere n'est pas définie. Vérifiez le fichier build.properties." if="org.cedre.sphere.check.failed" />
+		<condition property="build.app.version.check.failed">
+			<not>
+				<isset property="build.app.version" />
+			</not>
+		</condition>
+		<fail message="La propriété build.app.version n'est pas définie. Vérifiez le fichier build.properties." if="org.cedre.sphere.check.failed" />
+
+        <loadproperties srcfile="${version.file}"/>
+		<condition property="version.check.failed">
+			<not>
+				<isset property="version" />
+			</not>
+		</condition>
+		<fail message="La propriété version n'est pas définie. Vérifiez le fichier ${version.file}." if="version.check.failed" />
+
+		<tstamp>
+			<format property="TODAY_CEDRE" pattern="yyyyMMdd" locale="fr,FR"/>
+		</tstamp>
+		<property name="org.cedre.woadestfile" value="${dest.dir}/woa-${org.cedre.sphere}-${TODAY_CEDRE}-${project.name.alias}_v${version}.tar.gz" />
+		<property name="org.cedre.webdestfile" value="${dest.dir}/web-${org.cedre.sphere}-${TODAY_CEDRE}-${project.name.alias}_v${version}.tar.gz" />
+		<delete file="${org.cedre.woadestfile}" failonerror="false"/>
+		<delete file="${org.cedre.webdestfile}" failonerror="false"/>
+		<tar destfile="${org.cedre.woadestfile}"
+		        compression="gzip"
+		        longfile="gnu">
+			<tarfileset dir="${dest.dir}" mode="750">
+				<include name="${build.app.name}.woa/${build.app.name}"/>
+			</tarfileset>
+			<tarfileset dir="${dest.dir}">
+				<exclude name="${build.app.name}.woa/${build.app.name}"/>
+				<include name="${build.app.name}.woa/**"/>
+			</tarfileset>
+		</tar>
+		<tar destfile="${org.cedre.webdestfile}"
+		        compression="gzip"
+		        basedir="${wsdest.dir}/WebObjects"
+		        longfile="gnu"
+		        includes="${build.app.name}.woa/**">
+		</tar>
+	</target>
+
+
+
+
 </project>

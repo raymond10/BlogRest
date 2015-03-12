@@ -14,7 +14,8 @@ import fr.blog.Application;
 /**
  * @author Raymond NANEON <raymond.naneon at utt.fr> 26 févr. 2014
  *
- */
+ */	
+@SuppressWarnings("all")
 public class RestServicesConfig {
 
 	private static final String RESTSERVICES_TRANSACTIONLOG_ENABLED = "fr.blog.rest.restServicesconfig.transactionlog.enabled";

@@ -35,6 +35,11 @@ public class BlogServiceImpl implements BlogService {
 	 * 
 	 * @see fr.blog.service.BlogSearchService#search(java.lang.String)
 	 */
+	/**
+	 * Cherche les blogs à partir du token passé en paramètres
+	 * @param token la chaine de recherche
+	 * @return les résultats
+	 */
 	@Override
 	public List<BlogBean> search(String token) {
 		// TODO Auto-generated method stub
@@ -50,6 +55,11 @@ public class BlogServiceImpl implements BlogService {
 	/* (non-Javadoc)
 	 * @see fr.blog.service.BlogService#blogById(java.lang.Integer)
 	 */
+	/**
+	 * Cherche un blog en particulier à partir de l'id du blog passé en paramètres
+	 * @param blogId
+	 * @return un resultat
+	 */
 	@Override
 	public BlogBean blogById(Integer blogId) throws RestNoDataException {
 		// TODO Auto-generated method stub
@@ -63,6 +73,9 @@ public class BlogServiceImpl implements BlogService {
 	/* (non-Javadoc)
 	 * @see fr.blog.service.BlogService#createNewBlog(fr.blog.beans.BlogBean)
 	 */
+	/** 
+	 * Create new blog
+	 * **/
 	@Override
 	public BlogBean createNewBlog(BlogBean blogBean) {
 		// TODO Auto-generated method stub
@@ -85,6 +98,7 @@ public class BlogServiceImpl implements BlogService {
 	/* (non-Javadoc)
 	 * @see fr.blog.service.BlogService#updateBlog(fr.blog.beans.BlogBean)
 	 */
+	/**Update blog **/
 	@Override
 	public BlogBean updateBlog(BlogBean blogBean) {
 		// TODO Auto-generated method stub
@@ -104,6 +118,7 @@ public class BlogServiceImpl implements BlogService {
 	/* (non-Javadoc)
 	 * @see fr.blog.service.BlogService#removeBlog(fr.blog.beans.BlogBean)
 	 */
+	/**Remove blog **/
 	@Override
 	public void removeBlog(BlogBean blogBean) {
 		// TODO Auto-generated method stub

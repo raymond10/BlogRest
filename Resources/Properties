@@ -10,6 +10,12 @@ er.extensions.ERXEC.safeLocking=true
 er.extensions.ERXEC.useSharedEditingContext=false
 er.extensions.ERXEnterpriseObject.applyRestrictingQualifierOnInsert=true
 er.extensions.ERXEnterpriseObject.updateInverseRelationships=true
+
+# Utilisation de ERXDatabaseContext
+er.extensions.ERXDatabaseContext.className = er.extensions.eof.ERXDatabaseContext
+er.extensions.ERXDatabaseContext.activate = true
+er.extensions.ERXJDBCAdaptor.className=er.extensions.jdbc.ERXJDBCAdaptor
+
 dbEOPrototypesEntityGLOBAL=EOJDBCOraclePrototypes
 dbConnectURLGLOBAL=jdbc:oracle:thin:@univ.server.fr:1500:DATABASE
 dbConnectUserGLOBAL=RestUser

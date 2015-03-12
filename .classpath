@@ -14,7 +14,6 @@
 	<classpathentry kind="con" path="WOFramework/JavaWebObjects"/>
 	<classpathentry kind="con" path="WOFramework/JavaXML"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/Library/WebObjects/Extensions/ojdbc6.jar"/>
 	<classpathentry kind="lib" path="Libraries/activation.jar"/>
 	<classpathentry kind="lib" path="Libraries/aopalliance-1.0.jar"/>
 	<classpathentry kind="lib" path="Libraries/asm-3.1.jar"/>
@@ -40,5 +39,7 @@
 	<classpathentry kind="lib" path="Libraries/selenium-server-standalone-2.37.0.jar"/>
 	<classpathentry kind="lib" path="Libraries/woinject-1.1.jar"/>
 	<classpathentry kind="lib" path="Libraries/wounit-1.2.jar"/>
+	<classpathentry kind="con" path="WOFramework/EROraclePlugIn"/>
+	<classpathentry kind="lib" path="Libraries/ojdbc6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

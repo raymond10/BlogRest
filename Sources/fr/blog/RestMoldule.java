@@ -1,5 +1,7 @@
 /**
- * 
+ * Class de binding entre l'interface et la classe 
+ * mère contenant les méthodes important pour que les beans
+ * soient fonctionnels
  */
 package fr.blog;
 

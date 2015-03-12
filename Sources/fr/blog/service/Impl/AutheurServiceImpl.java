@@ -30,6 +30,11 @@ public class AutheurServiceImpl implements AutheurService {
 	/* (non-Javadoc)
 	 * @see fr.blog.service.AutheurService#search(java.lang.String)
 	 */
+	/**
+	 * Cherche les blogs à partir du token passé en paramètres
+	 * @param token la chaine de recherche
+	 * @return les résultats
+	 */
 	@Override
 	public List<AutheurBean> search(String token) throws RestNoDataException {
 		// TODO Auto-generated method stub
@@ -50,6 +55,12 @@ public class AutheurServiceImpl implements AutheurService {
 
 	/* (non-Javadoc)
 	 * @see fr.blog.service.AutheurService#autheurById(java.lang.Integer)
+	 */
+	/**
+	 * Revoie les détail d'un autheur de blog
+	 * @param autheurId identifiant de l'autheur
+	 * @return les details 
+	 * @throws RestNoDataException 
 	 */
 	@Override
 	public AutheurBean autheurById(Integer autheurId)

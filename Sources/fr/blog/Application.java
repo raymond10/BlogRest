@@ -52,14 +52,20 @@ public class Application extends InjectableApplication {
 		ERXMessageEncoding.setDefaultEncodingForAllLanguages("UTF8");
 	}
 	
+	/**
+	 * Initialisation des directive REST 
+	 */
 	public void finishInitialization() {
 		ERXRouteRequestHandler routeRequestHandler = new ERXRouteRequestHandler(ERXRouteRequestHandler.WO);
 		routeRequestHandler.addDefaultRoutes(Blog.ENTITY_NAME);
 		routeRequestHandler.addRoutes(BlogRestController.class);
 		ERXRouteRequestHandler.register(routeRequestHandler);
-		System.out.println(routeRequestHandler.routes());
+		//System.out.println(routeRequestHandler.routes());
 	}
 	
+	/**
+	 *  Injection du module contenant les Binding interface et implémentation méthodes
+	 */
 	protected Module[] modules() {
 		return ArrayUtils.add(super.modules(), new RestMoldule());
 	}

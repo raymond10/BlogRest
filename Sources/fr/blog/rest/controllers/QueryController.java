@@ -13,7 +13,6 @@ import com.webobjects.appserver.WOActionResults;
 import com.webobjects.appserver.WORequest;
 import com.webobjects.foundation.NSMutableArray;
 
-import er.extensions.eof.ERXEC;
 import er.extensions.eof.ERXKey;
 import er.extensions.eof.ERXKeyFilter;
 import er.rest.routes.jsr311.GET;
@@ -33,6 +32,7 @@ import fr.blog.rest.SQLDataProvider;
  * @author Raymond NANEON <raymond.naneon at utt.fr> 26 févr. 2014
  *
  */
+@SuppressWarnings("all")
 public class QueryController extends RestController {
 
 	private static final String QUERYID_KEY = "queryId";
